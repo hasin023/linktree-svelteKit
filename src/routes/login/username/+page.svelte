@@ -25,7 +25,27 @@
 		}, 500);
 	};
 
-	const confirmUsername = () => {};
+	const confirmUsername = async () => {
+		console.log('Confirming username', username);
+		const batch = writeBatch(db);
+
+		batch.set(doc(db, 'usernames', username), { uid: $user?.uid });
+		batch.set(doc(db, 'users', $user!.uid), {
+			username,
+			photoURL: $user?.photoURL ?? null,
+			published: true,
+			bio: 'Default BIO',
+			links: [
+				{
+					icon: 'custom',
+					title: 'Default TITLE',
+					url: 'Default URL'
+				}
+			]
+		});
+
+		await batch.commit();
+	};
 </script>
 
 <AuthCheck>
