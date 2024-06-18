@@ -2,8 +2,6 @@
 	import '../app.css';
 </script>
 
-<div>
-	<main class="px-20 py-8">
-		<slot />
-	</main>
+<div data-theme="sunset" class="p-6 min-h-screen flex flex-col">
+	<slot />
 </div>

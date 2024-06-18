@@ -3,6 +3,7 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 
+// Change this to your firebase project configuration
 const firebaseConfig = {
 	apiKey: "AIzaSyBElSKzQPR-I1uuFfulr0BFOHLOxT-SQbg",
 	authDomain: "linktree-sveltekit-4a1e6.firebaseapp.com",
