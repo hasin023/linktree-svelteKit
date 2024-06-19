@@ -28,6 +28,8 @@
 				<UserLink {...link} />
 			{/each}
 		</ul>
+
+		<a href={`${user.username}/edit`} class="mt-4 btn btn-outline btn-info"> Add a link </a>
 	{:else}
 		<h1 class="card-title text-warning">{data.error}</h1>
 	{/if}
