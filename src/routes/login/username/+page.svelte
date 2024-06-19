@@ -54,7 +54,7 @@
 </script>
 
 <AuthCheck>
-	<h2>Username</h2>
+	<h2 class="card-title mb-6">Decide on your Username</h2>
 	<form class="w-2/5" on:submit|preventDefault={confirmUsername}>
 		<input
 			type="text"
