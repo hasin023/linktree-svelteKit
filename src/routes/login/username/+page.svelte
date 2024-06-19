@@ -9,6 +9,11 @@
 
 	let debounceTimer: NodeJS.Timeout;
 
+	const regexString = /^(?=[a-zA-Z0-9._]{3,16}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
+	$: isValid = username.length > 2 && username.length < 16 && regexString.test(username);
+	$: isTouched = username.length > 0;
+	$: isTaken = isValid && !isAvailable && !loading;
+
 	const checkAvailability = async () => {
 		isAvailable = false;
 		clearTimeout(debounceTimer);
@@ -57,19 +62,38 @@
 			class="input w-full mb-3"
 			bind:value={username}
 			on:input={checkAvailability}
+			class:input-error={!isValid && isTouched}
+			class:input-warning={isTaken}
+			class:input-success={isAvailable && isValid && !loading}
 		/>
-		{#if isAvailable}
-			<p class="text-success text-sm">
-				The username {username} is Available.
-			</p>
-		{:else}
-			<p class="text-error text-sm">
-				The username {username} is not Available.
-			</p>
-		{/if}
 
-		<button class="btn btn-sm btn-outline btn-success mt-7">
-			Confirm username @{username}
-		</button>
+		<div class="mb-4">
+			{#if username.length > 0 && loading}
+				<p class="text-secondary text-sm">
+					Checking availability for @<strong>
+						{username}
+					</strong>
+					...
+				</p>
+			{/if}
+
+			{#if !isValid && isTouched}
+				<p class="text-error text-sm">Must be 3-16 characters long, Alphanumeric only</p>
+			{/if}
+
+			{#if isValid && !isAvailable && !loading}
+				<p class="text-warning text-sm">@<strong>{username}</strong> not available</p>
+			{/if}
+		</div>
+
+		{#if isValid && isAvailable && !loading}
+			<button class="btn btn-sm btn-outline btn-success">
+				Confirm username @{username}
+			</button>
+		{:else}
+			<button class="btn btn-sm btn-outline btn-neutral disabled" disabled>
+				Confirm username @{username}
+			</button>
+		{/if}
 	</form>
 </AuthCheck>
